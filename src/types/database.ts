@@ -62,6 +62,7 @@ type UnitRow = {
   unit_type: string | null;
   floor: string | null;
   area_sqm: number | null;
+  image_url: string | null;
   status: UnitStatus;
 } & Timestamps;
 
@@ -82,6 +83,7 @@ type AvailableUnitListingRow = {
   unit_type: string | null;
   floor: string | null;
   area_sqm: number | null;
+  image_url: string | null;
   project_name: string;
   project_location: string | null;
   developer_phone: string | null;

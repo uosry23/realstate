@@ -13,9 +13,10 @@ export async function createUnit(formData: FormData) {
   const unitType = formData.get("unit_type");
   const floor = formData.get("floor");
   const areaText = formData.get("area_sqm");
+  const imageUrl = formData.get("image_url");
   const companyId = await getCurrentWritableCompanyId();
   const area = typeof areaText === "string" && areaText.trim() ? Number(areaText) : null;
-  if (!companyId || typeof projectId !== "string" || !/^[0-9a-f-]{36}$/i.test(projectId) || typeof code !== "string" || code.trim().length < 1 || (area !== null && (!Number.isFinite(area) || area <= 0))) redirect("/units?state=error");
+  if (!companyId || typeof projectId !== "string" || !/^[0-9a-f-]{36}$/i.test(projectId) || typeof code !== "string" || code.trim().length < 1 || typeof imageUrl !== "string" || !/^https?:\/\/\S+$/i.test(imageUrl) || (area !== null && (!Number.isFinite(area) || area <= 0))) redirect("/units?state=error");
   const supabase = await createServerSupabaseClient();
   if (!supabase) redirect("/units?state=error");
   const { data: project } = await supabase.from("projects").select("id").eq("id", projectId).eq("company_id", companyId).maybeSingle();
@@ -27,6 +28,7 @@ export async function createUnit(formData: FormData) {
     unit_type: typeof unitType === "string" && unitType.trim() ? unitType.trim() : null,
     floor: typeof floor === "string" && floor.trim() ? floor.trim() : null,
     area_sqm: area,
+    image_url: imageUrl.trim(),
   });
   if (error) redirect("/units?state=error");
   revalidatePath("/");
@@ -57,9 +59,10 @@ export async function updateUnitDetails(formData: FormData) {
   const unitType = formData.get("unit_type");
   const floor = formData.get("floor");
   const areaText = formData.get("area_sqm");
+  const imageUrl = formData.get("image_url");
   const area = typeof areaText === "string" && areaText.trim() ? Number(areaText) : null;
   const companyId = await getCurrentWritableCompanyId();
-  if (!companyId || typeof unitId !== "string" || !/^[0-9a-f-]{36}$/i.test(unitId) || typeof code !== "string" || !code.trim() || (area !== null && (!Number.isFinite(area) || area <= 0))) redirect("/units?state=error");
+  if (!companyId || typeof unitId !== "string" || !/^[0-9a-f-]{36}$/i.test(unitId) || typeof code !== "string" || !code.trim() || (typeof imageUrl === "string" && imageUrl.trim() && !/^https?:\/\/\S+$/i.test(imageUrl)) || (area !== null && (!Number.isFinite(area) || area <= 0))) redirect("/units?state=error");
   const supabase = await createServerSupabaseClient();
   if (!supabase) redirect("/units?state=error");
   const { data, error } = await supabase.from("units").update({
@@ -67,6 +70,7 @@ export async function updateUnitDetails(formData: FormData) {
     unit_type: typeof unitType === "string" && unitType.trim() ? unitType.trim() : null,
     floor: typeof floor === "string" && floor.trim() ? floor.trim() : null,
     area_sqm: area,
+    image_url: typeof imageUrl === "string" && imageUrl.trim() ? imageUrl.trim() : null,
   }).eq("id", unitId).eq("company_id", companyId).select("id").maybeSingle();
   if (error || !data) redirect("/units?state=error");
   revalidatePath("/units");

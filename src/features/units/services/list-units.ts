@@ -14,6 +14,7 @@ type UnitQueryRow = {
   unit_type: string | null;
   floor: string | null;
   area_sqm: number | null;
+  image_url: string | null;
   status: UnitStatus;
   created_at: string;
   updated_at: string;
@@ -29,6 +30,7 @@ function toUnitListItem(row: UnitQueryRow): UnitListItem {
     unit_type: row.unit_type,
     floor: row.floor,
     area_sqm: row.area_sqm,
+    image_url: row.image_url,
     status: row.status,
     created_at: row.created_at,
     updated_at: row.updated_at,
@@ -46,7 +48,7 @@ export async function listUnits(filters: { search?: string; status?: UnitStatus;
       let query = client
       .from("units")
       .select(
-        "id, company_id, project_id, code, unit_type, floor, area_sqm, status, created_at, updated_at, projects:projects!units_project_id_fkey ( name )",
+        "id, company_id, project_id, code, unit_type, floor, area_sqm, image_url, status, created_at, updated_at, projects:projects!units_project_id_fkey ( name )",
         { count: "exact" },
       );
       if (search) query = query.or(buildIlikeOrFilter(["code", "unit_type", "floor"], search));

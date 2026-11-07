@@ -13,6 +13,7 @@ export function CreateUnitForm({ projects }: { projects: Project[] }) {
         <label className={labelClass}>نوع الوحدة<input className={inputClass} name="unit_type" /></label>
         <label className={labelClass}>الدور<input className={inputClass} name="floor" /></label>
         <label className={labelClass}>المساحة (م²)<input className={inputClass} name="area_sqm" type="number" min="0.01" step="0.01" /></label>
+        <label className={labelClass}>رابط صورة الوحدة<input className={inputClass} name="image_url" type="url" required placeholder="https://..." /></label>
       </div>
       <SubmitButton>حفظ الوحدة</SubmitButton>
     </form>

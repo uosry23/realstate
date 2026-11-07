@@ -42,7 +42,7 @@ function toLeadListItem(row: LeadQueryRow): LeadListItem {
   };
 }
 
-export async function listLeads(filters: { search?: string; stage?: LeadStage; page?: number; pageSize?: number } = {}): Promise<QueryResult<PaginatedRows<LeadListItem>>> {
+export async function listLeads(filters: { search?: string; stage?: LeadStage; source?: string; page?: number; pageSize?: number } = {}): Promise<QueryResult<PaginatedRows<LeadListItem>>> {
   const search = readSearchValue(filters.search);
   const page = normalizePage(filters.page);
   const pageSize = normalizePageSize(filters.pageSize);
@@ -57,6 +57,7 @@ export async function listLeads(filters: { search?: string; stage?: LeadStage; p
       );
       if (search) query = query.or(buildIlikeOrFilter(["full_name", "phone", "email"], search));
       if (filters.stage) query = query.eq("stage", filters.stage);
+      if (filters.source) query = query.eq("source", filters.source);
       const { data, count, error } = await query.order("created_at", { ascending: false }).range(from, to);
       return { data: { rows: data ?? [], totalCount: count ?? 0, page, pageSize }, error };
     },

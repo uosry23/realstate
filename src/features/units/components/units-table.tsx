@@ -18,6 +18,7 @@ export function UnitsTable({ units, canWrite, canDelete }: UnitsTableProps) {
       <table className="min-w-full text-right text-sm">
         <thead className="bg-slate-50 text-slate-600">
           <tr>
+            <th scope="col" className="px-4 py-3 font-medium">الصورة</th>
             <th scope="col" className="px-4 py-3 font-medium">
               كود الوحدة
             </th>
@@ -43,6 +44,7 @@ export function UnitsTable({ units, canWrite, canDelete }: UnitsTableProps) {
         <tbody>
           {units.map((unit) => (
             <tr key={unit.id} className="border-t border-slate-100">
+              <td className="px-4 py-3">{unit.image_url ? <div className="h-12 w-16 rounded-md bg-cover bg-center" style={{ backgroundImage: `url(${unit.image_url})` }} aria-label={`صورة الوحدة ${unit.code}`} /> : "—"}</td>
               <td className="px-4 py-3 font-medium text-slate-900"><Link href={`/units/${unit.id}`} className="rounded outline-none hover:text-teal-800 hover:underline focus-visible:ring-2 focus-visible:ring-teal-600">{unit.code}</Link></td>
               <td className="px-4 py-3 text-slate-700">
                 {unit.projectName ?? "—"}

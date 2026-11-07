@@ -11,6 +11,7 @@ export function EditUnitForm({ unit }: { unit: UnitListItem }) {
       <label className={labelClass}>نوع الوحدة<input className={inputClass} name="unit_type" defaultValue={unit.unit_type ?? ""} /></label>
       <label className={labelClass}>الدور<input className={inputClass} name="floor" defaultValue={unit.floor ?? ""} /></label>
       <label className={labelClass}>المساحة (م²)<input className={inputClass} name="area_sqm" type="number" min="0.01" step="0.01" defaultValue={unit.area_sqm ?? ""} /></label>
+      <label className={labelClass}>رابط صورة الوحدة<input className={inputClass} name="image_url" type="url" defaultValue={unit.image_url ?? ""} /></label>
       <SubmitButton>حفظ التعديلات</SubmitButton>
     </form>
   </InlineEditPanel>;
