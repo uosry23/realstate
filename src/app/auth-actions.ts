@@ -29,7 +29,7 @@ export async function signIn(
     password,
   });
   if (error) return { error: "تعذر تسجيل الدخول. راجع البريد وكلمة المرور." };
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function signUp(
@@ -80,7 +80,7 @@ export async function signUp(
   if (!data.session) {
     return { message: "تم إنشاء الحساب. افتح رسالة التأكيد في بريدك لإكمال التسجيل." };
   }
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function requestPasswordReset(
@@ -115,7 +115,7 @@ export async function updatePassword(
   if (!user) return { error: "انتهت صلاحية رابط إعادة التعيين. اطلب رابطًا جديدًا." };
   const { error } = await supabase.auth.updateUser({ password });
   if (error) return { error: "تعذر تحديث كلمة المرور. اطلب رابطًا جديدًا وحاول مرة أخرى." };
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function signOut() {

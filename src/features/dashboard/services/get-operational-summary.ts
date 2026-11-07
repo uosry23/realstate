@@ -1,6 +1,6 @@
 import { countBrokers } from "@/features/brokers/services/list-brokers";
 import type { OperationalSummary } from "@/features/dashboard/types";
-import { countLeads } from "@/features/leads/services/list-leads";
+import { countLeads, countPublicInterestLeads } from "@/features/leads/services/list-leads";
 import { countProjects } from "@/features/projects/services/list-projects";
 import { countOpenServiceRequests } from "@/features/service-requests/services/list-service-requests";
 import {
@@ -23,6 +23,7 @@ export async function getOperationalSummary(): Promise<
     units,
     unitsByStatus,
     leads,
+    publicInterestLeads,
     brokers,
     openServiceRequests,
   ] = await Promise.all([
@@ -30,6 +31,7 @@ export async function getOperationalSummary(): Promise<
     countUnits(),
     countUnitsByStatus(),
     countLeads(),
+    countPublicInterestLeads(),
     countBrokers(),
     countOpenServiceRequests(),
   ]);
@@ -39,6 +41,7 @@ export async function getOperationalSummary(): Promise<
     units,
     unitsByStatus,
     leads,
+    publicInterestLeads,
     brokers,
     openServiceRequests,
   ]);
@@ -52,6 +55,7 @@ export async function getOperationalSummary(): Promise<
     units.status !== "ok" ||
     unitsByStatus.status !== "ok" ||
     leads.status !== "ok" ||
+    publicInterestLeads.status !== "ok" ||
     brokers.status !== "ok" ||
     openServiceRequests.status !== "ok"
   ) {
@@ -65,6 +69,7 @@ export async function getOperationalSummary(): Promise<
       unitCount: units.data,
       unitCountsByStatus: unitsByStatus.data,
       leadCount: leads.data,
+      publicInterestLeadCount: publicInterestLeads.data,
       brokerCount: brokers.data,
       openServiceRequestCount: openServiceRequests.data,
     },

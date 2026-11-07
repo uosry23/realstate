@@ -81,3 +81,13 @@ export async function countLeads(): Promise<QueryResult<number>> {
     return { data: count ?? 0, error };
   });
 }
+
+export async function countPublicInterestLeads(): Promise<QueryResult<number>> {
+  return runServerQuery(async (client) => {
+    const { count, error } = await client
+      .from("leads")
+      .select("id", { count: "exact", head: true })
+      .eq("source", "الموقع العام");
+    return { data: count ?? 0, error };
+  });
+}

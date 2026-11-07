@@ -51,6 +51,7 @@ type ProjectRow = {
   name: string;
   location: string | null;
   description: string | null;
+  developer_phone: string | null;
 } & Timestamps;
 
 type UnitRow = {
@@ -73,6 +74,18 @@ type UnitStatusEventRow = {
   changed_by: string | null;
   changed_at: string;
   note: string | null;
+};
+
+type AvailableUnitListingRow = {
+  id: string;
+  code: string;
+  unit_type: string | null;
+  floor: string | null;
+  area_sqm: number | null;
+  project_name: string;
+  project_location: string | null;
+  developer_phone: string | null;
+  company_name: string;
 };
 
 type BrokerRow = {
@@ -331,7 +344,12 @@ export type Database = {
         ]
       >;
     };
-    Views: Record<string, never>;
+    Views: {
+      available_unit_listings: {
+        Row: AvailableUnitListingRow;
+        Relationships: [];
+      };
+    };
     Functions: {
       current_company_id: {
         Args: Record<string, never>;
@@ -340,6 +358,10 @@ export type Database = {
       current_company_role: {
         Args: Record<string, never>;
         Returns: CompanyRole | null;
+      };
+      create_public_unit_interest: {
+        Args: { p_unit_id: string; p_full_name: string; p_phone: string; p_email?: string | null; p_message?: string | null };
+        Returns: string;
       };
     };
     Enums: Record<string, never>;

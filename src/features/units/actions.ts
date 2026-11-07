@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getCurrentWritableCompanyId } from "@/lib/auth/get-current-company-id";
+import { getCurrentMembership } from "@/lib/auth/get-current-membership";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type { UnitStatus } from "@/types/database";
 
@@ -71,4 +72,18 @@ export async function updateUnitDetails(formData: FormData) {
   revalidatePath("/units");
   revalidatePath("/service-requests");
   redirect("/units?state=created");
+}
+
+export async function deleteUnit(formData: FormData) {
+  const unitId = formData.get("unit_id");
+  const membership = await getCurrentMembership();
+  if (!membership || membership.role !== "manager" || typeof unitId !== "string" || !/^[0-9a-f-]{36}$/i.test(unitId)) redirect("/units?state=error");
+  const supabase = await createServerSupabaseClient();
+  if (!supabase) redirect("/units?state=error");
+  const { error } = await supabase.from("units").delete().eq("id", unitId).eq("company_id", membership.companyId);
+  if (error) redirect("/units?state=error");
+  revalidatePath("/");
+  revalidatePath("/dashboard");
+  revalidatePath("/units");
+  redirect("/units?state=deleted");
 }

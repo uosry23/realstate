@@ -18,7 +18,7 @@ export default async function TeamPage({ searchParams }: { searchParams: Promise
 
   const membership = await getCurrentMembership();
   if (!membership) redirect("/login");
-  if (membership.role !== "manager") redirect("/");
+  if (membership.role !== "manager") redirect("/dashboard");
 
   const team = await listCompanyTeam();
   return <section>

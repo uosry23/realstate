@@ -23,7 +23,7 @@ export async function updateSession(request: NextRequest) {
 
   const { data, error } = await supabase.auth.getClaims();
   const pathname = request.nextUrl.pathname;
-  const isPublicPath = ["/login", "/signup", "/forgot-password", "/auth/confirm"].includes(pathname);
+  const isPublicPath = ["/", "/login", "/signup", "/forgot-password", "/auth/confirm"].includes(pathname) || pathname.startsWith("/properties/");
   if (!data?.claims && !isPublicPath) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
@@ -35,7 +35,7 @@ export async function updateSession(request: NextRequest) {
   }
   if (!error && data?.claims && (pathname === "/login" || pathname === "/signup" || pathname === "/forgot-password")) {
     const url = request.nextUrl.clone();
-    url.pathname = "/";
+    url.pathname = "/dashboard";
     return NextResponse.redirect(url);
   }
   return response;

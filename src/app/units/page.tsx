@@ -39,7 +39,7 @@ export default async function UnitsPage({ searchParams }: PageProps<"/units">) {
         basePath="/units"
         searchParams={{ ...(search ? { search } : {}), ...(status ? { status } : {}), ...(projectId ? { project_id: projectId } : {}) }}
       >
-        {(units) => <UnitsTable units={units} canWrite={canWrite} />}
+        {(units) => <UnitsTable units={units} canWrite={canWrite} canDelete={membership?.role === "manager"} />}
       </PaginatedListQueryPanel>
     </section>
   );

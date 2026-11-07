@@ -1,5 +1,5 @@
 export const NAV_ITEMS = [
-  { href: "/", label: "لوحة التشغيل" },
+  { href: "/dashboard", label: "لوحة التشغيل" },
   { href: "/projects", label: "المشاريع" },
   { href: "/units", label: "الوحدات" },
   { href: "/leads", label: "العملاء المحتملون" },

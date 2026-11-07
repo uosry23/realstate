@@ -13,7 +13,7 @@ export async function listProjects(filters: { search?: string; page?: number; pa
   return runServerQuery(async (client) => {
     let query = client
       .from("projects")
-      .select("id, company_id, name, location, description, created_at, updated_at", { count: "exact" });
+      .select("id, company_id, name, location, description, developer_phone, created_at, updated_at", { count: "exact" });
     if (search) query = query.or(buildIlikeOrFilter(["name", "location", "description"], search));
     const { data, count, error } = await query.order("created_at", { ascending: false }).range(from, to);
     return { data: { rows: data ?? [], totalCount: count ?? 0, page, pageSize }, error };

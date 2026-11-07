@@ -21,6 +21,7 @@ export function OperationalSummaryCards({
     },
     { label: UNIT_STATUS_LABELS.sold, value: summary.unitCountsByStatus.sold },
     { label: "العملاء المحتملون", value: summary.leadCount },
+    { label: "طلبات معاينة الموقع", value: summary.publicInterestLeadCount },
     { label: "الوسطاء", value: summary.brokerCount },
     { label: "طلبات مفتوحة", value: summary.openServiceRequestCount },
   ];

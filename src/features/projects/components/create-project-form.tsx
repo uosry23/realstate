@@ -10,6 +10,7 @@ export function CreateProjectForm() {
         <label className={labelClass}>الموقع<input className={inputClass} name="location" /></label>
       </div>
       <label className={labelClass}>الوصف<textarea className={inputClass} name="description" rows={3} /></label>
+      <label className={labelClass}>هاتف المطور المسؤول<input className={inputClass} name="developer_phone" type="tel" /></label>
       <SubmitButton>حفظ المشروع</SubmitButton>
     </form>
   </CreateRecordPanel>;

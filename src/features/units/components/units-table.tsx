@@ -2,14 +2,17 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { UNIT_STATUS_LABELS, type UnitListItem } from "@/features/units/types";
 import { UnitStatusForm } from "@/features/units/components/unit-status-form";
 import { EditUnitForm } from "@/features/units/components/edit-unit-form";
+import { DeleteRecordForm } from "@/components/ui/delete-record-form";
+import { deleteUnit } from "@/features/units/actions";
 import Link from "next/link";
 
 type UnitsTableProps = {
   units: UnitListItem[];
   canWrite: boolean;
+  canDelete: boolean;
 };
 
-export function UnitsTable({ units, canWrite }: UnitsTableProps) {
+export function UnitsTable({ units, canWrite, canDelete }: UnitsTableProps) {
   return (
     <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
       <table className="min-w-full text-right text-sm">
@@ -58,7 +61,7 @@ export function UnitsTable({ units, canWrite }: UnitsTableProps) {
                 />
               </td>
               {canWrite ? <td className="px-4 py-3"><UnitStatusForm unitId={unit.id} currentStatus={unit.status} /></td> : null}
-              {canWrite ? <td className="px-4 py-3"><EditUnitForm unit={unit} /></td> : null}
+              {canWrite ? <td className="flex gap-2 px-4 py-3"><EditUnitForm unit={unit} />{canDelete ? <DeleteRecordForm action={deleteUnit} field="unit_id" value={unit.id} message={`حذف الوحدة ${unit.code}؟`} /> : null}</td> : null}
             </tr>
           ))}
         </tbody>

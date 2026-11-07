@@ -8,10 +8,6 @@ import { NAV_ITEMS } from "@/components/layout/nav-items";
 import type { CompanyRole } from "@/types/database";
 
 function isActivePath(pathname: string, href: string): boolean {
-  if (href === "/") {
-    return pathname === "/";
-  }
-
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 

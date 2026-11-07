@@ -10,6 +10,7 @@ export function EditProjectForm({ project }: { project: Project }) {
       <label className={labelClass}>اسم المشروع<input className={inputClass} name="name" required minLength={2} defaultValue={project.name} /></label>
       <label className={labelClass}>الموقع<input className={inputClass} name="location" defaultValue={project.location ?? ""} /></label>
       <label className={labelClass}>الوصف<textarea className={inputClass} name="description" rows={3} defaultValue={project.description ?? ""} /></label>
+      <label className={labelClass}>هاتف المطور المسؤول<input className={inputClass} name="developer_phone" type="tel" defaultValue={project.developer_phone ?? ""} /></label>
       <SubmitButton>حفظ التعديلات</SubmitButton>
     </form>
   </InlineEditPanel>;

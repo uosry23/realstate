@@ -13,7 +13,7 @@ type AppShellProps = {
 
 export function AppShell({ children, accountBar, role }: AppShellProps) {
   const pathname = usePathname();
-  const isAuthPage = ["/login", "/signup", "/forgot-password", "/reset-password"].includes(pathname);
+  const isPublicPage = ["/", "/login", "/signup", "/forgot-password", "/reset-password"].includes(pathname) || pathname.startsWith("/properties/");
 
   return (
     <div className="min-h-full bg-slate-50">
@@ -23,10 +23,10 @@ export function AppShell({ children, accountBar, role }: AppShellProps) {
       >
         تخطي إلى المحتوى
       </a>
-      <div className={isAuthPage ? "" : "lg:grid lg:grid-cols-[16rem_1fr]"}>
-        {isAuthPage ? null : <SidebarNav role={role} />}
+      <div className={isPublicPage ? "" : "lg:grid lg:grid-cols-[16rem_1fr]"}>
+        {isPublicPage ? null : <SidebarNav role={role} />}
         <main id="main-content" className="min-h-screen px-4 py-6 sm:px-6 lg:px-8">
-          {isAuthPage ? children : <>{accountBar}{children}</>}
+          {isPublicPage ? children : <>{accountBar}{children}</>}
         </main>
       </div>
     </div>

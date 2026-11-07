@@ -32,7 +32,7 @@ export default async function ProjectsPage({ searchParams }: PageProps<"/project
         basePath="/projects"
         searchParams={search ? { search } : {}}
       >
-        {(projects) => <ProjectsTable projects={projects} canWrite={canWrite} />}
+        {(projects) => <ProjectsTable projects={projects} canWrite={canWrite} canDelete={membership?.role === "manager"} />}
       </PaginatedListQueryPanel>
     </section>
   );

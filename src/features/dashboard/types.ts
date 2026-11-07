@@ -5,6 +5,7 @@ export type OperationalSummary = {
   unitCount: number;
   unitCountsByStatus: Record<UnitStatus, number>;
   leadCount: number;
+  publicInterestLeadCount: number;
   brokerCount: number;
   openServiceRequestCount: number;
 };
